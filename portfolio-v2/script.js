@@ -69,7 +69,7 @@ if (fine && !reduceMotion) {
   window.addEventListener('mouseup', () => cur.classList.remove('down'));
 
   // powiększanie i rozmycie nad klikalnymi elementami i kształtami hero
-  const hoverables = 'a, .card, .shape';
+  const hoverables = 'a, .card, .shape, .rs-card, .rs-stage button';
   document.addEventListener('mouseover', (e) => {
     cur.classList.toggle('hover', !!e.target.closest(hoverables));
   });

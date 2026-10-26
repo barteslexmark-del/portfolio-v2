@@ -1,0 +1,174 @@
+/* ==========================================================
+   KARUZELA PROJEKTÓW (prototyp) – pierścienie 3D na gradiencie
+   Czcionka bierze się z folderu ../fonts (ten sam co na stronie głównej)
+   ========================================================== */
+@font-face {
+  font-family: "Archivo";
+  src: url("../fonts/archivo-latin-ext-wdth-normal.woff2") format("woff2");
+  font-weight: 100 900; font-stretch: 62% 125%; font-display: swap;
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: "Archivo";
+  src: url("../fonts/archivo-latin-wdth-normal.woff2") format("woff2");
+  font-weight: 100 900; font-stretch: 62% 125%; font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+:root {
+  --bg: #c9cacc;
+  --ink: #1a1a1c;
+  --ink-soft: #55565a;
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Archivo", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Ziarno jak na stronie głównej */
+body::before {
+  content: "";
+  position: fixed; inset: 0; z-index: 100;
+  pointer-events: none;
+  opacity: 0.3;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.title {
+  position: fixed; left: 0; right: 0; top: 34px; z-index: 5;
+  margin: 0; text-align: center;
+  font-size: clamp(1.2rem, 1.6vw, 1.7rem);
+  font-weight: 800; font-stretch: 125%; letter-spacing: .03em;
+}
+
+/* ---------- scena 3D ---------- */
+.stage { position: fixed; inset: 0; cursor: grab; touch-action: pan-y; }
+.stage.dragging { cursor: grabbing; }
+.scene {
+  position: absolute; inset: 0;
+  perspective: 2800px;
+  perspective-origin: 50% 28%;
+}
+.world {
+  position: absolute; left: 50%; top: 48%;
+  width: 0; height: 0;
+  transform-style: preserve-3d;
+  /* transform ustawia script.js (skala, nachylenie, delikatny ruch za myszką) */
+}
+
+/* podłoga: gradient + napisy po okręgu */
+.floor {
+  position: absolute;
+  width: 2106px; height: 2106px;
+  left: -1053px; top: -1053px;
+  transform: rotateX(90deg);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 1.4s ease;
+}
+.ready .floor { opacity: 1; }
+.floor .tex {
+  position: absolute; inset: 0;
+  background: url("img/floor.webp") center / 100% 100% no-repeat;
+  animation: floor-spin 420s linear infinite;      /* bardzo powolny obrót "cieczy" */
+}
+@keyframes floor-spin { to { transform: rotate(360deg); } }
+.floor-labels { position: absolute; inset: 0; overflow: visible; }
+.floor-labels text {
+  font-family: "Archivo", sans-serif;
+  font-weight: 800; font-stretch: 125%;
+  font-size: 36px; letter-spacing: .34em;
+  fill: var(--ink);
+}
+
+/* ---------- pierścienie i karty ---------- */
+.ring { position: absolute; left: 0; top: 0; transform-style: preserve-3d; }
+.card {
+  position: absolute;
+  transform-style: preserve-3d;
+  transform-origin: 50% 100%;
+  cursor: pointer;
+  opacity: 0;
+  box-shadow: 0 14px 30px rgba(0, 0, 0, .38);
+  background: #bbb;
+}
+.ready .card { opacity: 1; transition: opacity .9s ease; }
+.card img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  display: block;
+  object-fit: cover;
+  -webkit-user-drag: none; user-select: none;
+}
+
+/* ---------- podpis i link ---------- */
+.caption {
+  position: fixed; left: 0; right: 0; top: 84px; z-index: 5;
+  margin: 0; text-align: center;
+  font-size: .8rem; font-weight: 800; font-stretch: 125%; letter-spacing: .16em;
+  text-transform: uppercase;
+  opacity: 0; transition: opacity .3s ease;
+  pointer-events: none;
+}
+.caption.on { opacity: 1; }
+.caption span { font-weight: 600; color: var(--ink-soft); margin-left: 12px; }
+
+.all {
+  position: fixed; left: 50%; bottom: 26px; z-index: 5;
+  transform: translateX(-50%);
+  font-size: .68rem; font-weight: 700; font-stretch: 125%; letter-spacing: .14em;
+  color: var(--ink); text-decoration: none;
+  border-bottom: 1px solid var(--ink); padding-bottom: 2px;
+}
+
+/* ---------- podgląd pełnoekranowy ---------- */
+.lightbox {
+  position: fixed; inset: 0; z-index: 50;
+  display: grid; place-items: center;
+  background: rgba(201, 202, 204, .92);
+  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+  opacity: 0; transition: opacity .35s ease;
+}
+.lightbox[hidden] { display: none; }
+.lightbox.open { opacity: 1; }
+.lb-img {
+  max-width: min(88vw, 1700px); max-height: 80vh;
+  box-shadow: 0 30px 70px rgba(0, 0, 0, .28);
+  transform: scale(.94); transition: transform .45s cubic-bezier(.2, .8, .2, 1), opacity .25s ease;
+}
+.lightbox.open .lb-img { transform: scale(1); }
+.lb-img.swap { opacity: 0; transform: scale(.97); }
+.lb-close, .lb-arrow {
+  position: absolute; border: 0; background: none; color: var(--ink);
+  font-family: inherit; cursor: pointer;
+}
+.lb-close {
+  right: 40px; top: 32px;
+  font-size: .72rem; font-weight: 800; font-stretch: 125%; letter-spacing: .16em;
+}
+.lb-arrow {
+  top: 50%; width: 46px; height: 46px; margin-top: -23px;
+  border: 1px solid rgba(26, 26, 28, .5); border-radius: 50%;
+  font-size: 22px; line-height: 1; display: grid; place-items: center;
+  transition: background .2s ease;
+}
+.lb-arrow:hover { background: rgba(255, 255, 255, .4); }
+.lb-prev { left: 40px; } .lb-next { right: 40px; }
+.lb-cap {
+  position: absolute; left: 0; right: 0; bottom: 34px; margin: 0; text-align: center;
+  font-size: .72rem; font-weight: 800; font-stretch: 125%; letter-spacing: .16em; text-transform: uppercase;
+}
+.lb-cap span { font-weight: 600; color: var(--ink-soft); margin-left: 14px; }
+
+@media (max-width: 640px) {
+  .lb-prev { left: 12px; } .lb-next { right: 12px; }
+  .lb-close { right: 18px; }
+}

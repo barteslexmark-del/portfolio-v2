@@ -1,0 +1,142 @@
+/* ==========================================================
+   SEKCJA PROJEKTY – karuzela 3D (wersja do wklejenia w stronę)
+   Wszystkie klasy zaczynają się od "rs-", żeby nie kolidowały ze stylami strony.
+   ========================================================== */
+.rs-section {
+  position: relative;
+  height: max(100vh, 680px);
+  margin-bottom: 8vh;          /* zapas na dole, żeby podłoga nie nachodziła na następną sekcję */
+  overflow-x: clip;            /* boki przycięte (brak poziomego scrolla), dół i góra wolne */
+  overflow-y: visible;
+}
+.rs-section .rs-floor-labels text { font-family: inherit; }
+
+/* ---------- scena 3D ---------- */
+.rs-stage { position: absolute; inset: 0; cursor: grab; touch-action: pan-y; }
+.rs-stage.rs-dragging { cursor: grabbing; }
+.rs-scene {
+  position: absolute; inset: 0;
+  perspective: 2800px;
+  perspective-origin: 50% 28%;
+}
+.rs-world {
+  position: absolute; left: 50%; top: 48%;
+  width: 0; height: 0;
+  transform-style: preserve-3d;
+  /* transform ustawia script.js (skala, nachylenie, delikatny ruch za myszką) */
+}
+
+/* podłoga: gradient + napisy po okręgu */
+.rs-floor {
+  position: absolute;
+  width: 2106px; height: 2106px;
+  left: -1053px; top: -1053px;
+  transform: rotateX(90deg);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 1.4s ease;
+}
+.rs-ready .rs-floor { opacity: 1; }
+.rs-floor .rs-tex {
+  position: absolute; inset: 0;
+  background: url("img/floor.webp") center / 100% 100% no-repeat;
+  animation: rs-floor-spin 420s linear infinite;      /* bardzo powolny obrót "cieczy" */
+}
+@keyframes rs-floor-spin { to { transform: rotate(360deg); } }
+.rs-floor-labels { position: absolute; inset: 0; overflow: visible; }
+.rs-floor-labels text {
+  font-family: "Archivo", sans-serif;
+  font-weight: 800; font-stretch: 125%;
+  font-size: 36px; letter-spacing: .34em;
+  fill: var(--ink, #1a1a1c);
+}
+
+/* ---------- pierścienie i karty ---------- */
+.rs-ring { position: absolute; left: 0; top: 0; transform-style: preserve-3d; }
+.rs-card {
+  position: absolute;
+  transform-style: preserve-3d;
+  transform-origin: 50% 100%;
+  cursor: pointer;
+  opacity: 0;
+  box-shadow: 0 14px 30px rgba(0, 0, 0, .38);
+  background: #bbb;
+}
+.rs-ready .rs-card { opacity: 1; transition: opacity .9s ease; }
+.rs-card img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  display: block;
+  object-fit: cover;
+  -webkit-user-drag: none; user-select: none;
+}
+
+/* ---------- podpis i link ---------- */
+.rs-caption {
+  position: absolute; left: 0; right: 0; top: 168px; z-index: 5;
+  margin: 0; text-align: center;
+  font-size: .8rem; font-weight: 800; font-stretch: 125%; letter-spacing: .16em;
+  text-transform: uppercase;
+  opacity: 0; transition: opacity .3s ease;
+  pointer-events: none;
+}
+.rs-caption.rs-on { opacity: 1; }
+.rs-caption span { font-weight: 600; color: var(--ink-soft, #55565a); margin-left: 12px; }
+
+.rs-all {
+  position: absolute; left: 50%; bottom: 18px; z-index: 5;
+  transform: translateX(-50%);
+  font-size: .68rem; font-weight: 700; font-stretch: 125%; letter-spacing: .14em;
+  color: var(--ink, #1a1a1c); text-decoration: none;
+  border-bottom: 1px solid var(--ink, #1a1a1c); padding-bottom: 2px;
+}
+
+/* ---------- podgląd pełnoekranowy ---------- */
+.rs-lightbox {
+  position: fixed; inset: 0; z-index: 50;
+  display: grid; place-items: center;
+  background: rgba(201, 202, 204, .92);
+  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+  opacity: 0; transition: opacity .35s ease;
+}
+.rs-lightbox[hidden] { display: none; }
+.rs-lightbox.rs-open { opacity: 1; }
+.rs-lb-img {
+  max-width: min(88vw, 1700px); max-height: 80vh;
+  box-shadow: 0 30px 70px rgba(0, 0, 0, .28);
+  transform: scale(.94); transition: transform .45s cubic-bezier(.2, .8, .2, 1), opacity .25s ease;
+}
+.rs-lightbox.rs-open .rs-lb-img { transform: scale(1); }
+.rs-lb-img.rs-swap { opacity: 0; transform: scale(.97); }
+.rs-lb-close, .rs-lb-arrow {
+  position: absolute; border: 0; background: none; color: var(--ink, #1a1a1c);
+  font-family: inherit; cursor: pointer;
+}
+.rs-lb-close {
+  right: 40px; top: 32px;
+  font-size: .72rem; font-weight: 800; font-stretch: 125%; letter-spacing: .16em;
+}
+.rs-lb-arrow {
+  top: 50%; width: 46px; height: 46px; margin-top: -23px;
+  border: 1px solid rgba(26, 26, 28, .5); border-radius: 50%;
+  font-size: 22px; line-height: 1; display: grid; place-items: center;
+  transition: background .2s ease;
+}
+.rs-lb-arrow:hover { background: rgba(255, 255, 255, .4); }
+.rs-lb-prev { left: 40px; } .rs-lb-next { right: 40px; }
+.rs-lb-cap {
+  position: absolute; left: 0; right: 0; bottom: 34px; margin: 0; text-align: center;
+  font-size: .72rem; font-weight: 800; font-stretch: 125%; letter-spacing: .16em; text-transform: uppercase;
+}
+.rs-lb-cap span { font-weight: 600; color: var(--ink-soft, #55565a); margin-left: 14px; }
+
+@media (max-width: 640px) {
+  .rs-lb-prev { left: 12px; } .rs-lb-next { right: 12px; }
+  .rs-lb-close { right: 18px; }
+}
+
+/* tytuł sekcji nad sceną */
+.rs-section .section-title { position: relative; z-index: 5; margin: 0; padding-top: 96px; pointer-events: none; }
+/* szklany kursor zamiast systemowego */
+.has-cursor .rs-stage, .has-cursor .rs-card, .has-cursor .rs-all,
+.has-cursor .rs-lightbox, .has-cursor .rs-lightbox button { cursor: none; }

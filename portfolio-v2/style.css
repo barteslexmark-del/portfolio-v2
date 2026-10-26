@@ -582,3 +582,64 @@ body::before {
   justify-content: center;
   margin: 28px auto 0;
 }
+
+/* ==========================================================
+   O MNIE – zdjęcie + dwa kontenery tekstu
+   Zdjęcie jest kadrowane do widocznej szklanej tafli (bez przezroczystych
+   marginesów PNG), a oba kontenery tekstu mają dokładnie jego wysokość.
+   Wszystkie rozmiary liczą się od szerokości sekcji (cqw), więc układ skaluje się razem z oknem.
+   ========================================================== */
+.about-inner {
+  container-type: inline-size;
+  grid-template-columns: 27% 1fr 1fr;                      /* zdjęcie | tekst 1 | tekst 2 */
+  grid-template-areas:
+    ".     title title"
+    "photo text  text2";
+  column-gap: 3.7%;
+  align-items: stretch;
+}
+.about-photo {
+  grid-area: photo;
+  align-self: start;
+  position: relative;
+  width: 72.4%;                                            /* ile kolumny zajmuje tafla */
+  aspect-ratio: 1202 / 1614;                               /* proporcje przyciętego zdjęcia */
+  margin: 0 0 0 -.9cqw;
+}
+.about-photo img {
+  position: absolute;
+  width: 182.1%; max-width: none; height: auto;
+  left: -41.9%;
+  top: -14.3%;                                             /* przycięcie przezroczystych marginesów PNG */
+}
+.about-text {
+  margin: .9cqw 0 0;
+  max-width: none;
+  font-size: .85cqw;
+  line-height: 1.9;
+  letter-spacing: .1em;
+}
+.about-text-2 { grid-area: text2; text-align: justify; }
+.about-text-2 p { margin: 0; }
+.about-sub {
+  margin: 0 0 1.4cqw;
+  font-size: 1.5cqw;
+  font-weight: 800;
+  font-stretch: 125%;
+  letter-spacing: .03em;
+  line-height: 1.15;
+  color: var(--ink);
+  text-transform: uppercase;
+}
+
+/* telefon i wąskie okna: wszystko jedno pod drugim */
+@media (max-width: 900px) {
+  .about-inner {
+    grid-template-columns: 1fr;
+    grid-template-areas: "title" "photo" "text" "text2";
+    row-gap: 24px;
+  }
+  .about-photo { width: min(260px, 70%); margin-left: 0; overflow: hidden; }
+  .about-text { font-size: .74rem; margin: 0; }
+  .about-sub { font-size: 1.05rem; margin-bottom: 14px; }
+}

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Projekty – karuzela (prototyp)</title>
+  <link rel="stylesheet" href="karuzela.css">
+</head>
+<body>
+
+  <h1 class="title">PROJEKTY</h1>
+
+  <!-- Scena 3D: podłoga (gradient + napisy) i dwa pierścienie ze zdjęciami -->
+  <div class="stage" id="stage">
+    <div class="scene">
+      <div class="world" id="world">
+        <div class="floor">
+          <div class="tex"></div>
+          <svg class="floor-labels" viewBox="-1053 -1053 2106 2106" aria-hidden="true">
+            <defs>
+              <path id="pathInt" d="M -548 0 A 548 548 0 0 0 548 0"/>
+              <path id="pathExt" d="M -868 0 A 868 868 0 0 0 868 0"/>
+            </defs>
+            <!-- startOffset = gdzie na łuku stoi napis (0% lewy bok, 50% środek przodu, 100% prawy bok) -->
+            <text><textPath href="#pathInt" startOffset="29%" text-anchor="middle">INTERIOR</textPath></text>
+            <text><textPath href="#pathExt" startOffset="73%" text-anchor="middle">EXTERIOR</textPath></text>
+          </svg>
+        </div>
+        <div class="ring" id="ring-exterior"></div>
+        <div class="ring" id="ring-interior"></div>
+      </div>
+    </div>
+  </div>
+
+  <p class="caption" id="caption"></p>
+  <a class="all" href="#">ZOBACZ WSZYSTKIE PRACE →</a>
+
+  <!-- Pełnoekranowy podgląd po kliknięciu -->
+  <div class="lightbox" id="lightbox" hidden>
+    <button class="lb-close" id="lbClose" type="button">ZAMKNIJ ✕</button>
+    <button class="lb-arrow lb-prev" id="lbPrev" type="button" aria-label="Poprzednie">‹</button>
+    <img class="lb-img" id="lbImg" alt="">
+    <button class="lb-arrow lb-next" id="lbNext" type="button" aria-label="Następne">›</button>
+    <p class="lb-cap" id="lbCap"></p>
+  </div>
+
+  <script src="karuzela.js"></script>
+</body>
+</html>

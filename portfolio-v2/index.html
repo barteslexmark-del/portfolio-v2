@@ -4,8 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex">
-  <title>Portfolio 2026</title>
+  <title>BB visual</title>
+  <link rel="icon" type="image/png" href="media/favicon.png">
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="projekty/projekty.css">
 </head>
 <body>
 
@@ -65,89 +67,43 @@
     </div>
   </section>
 
-  <!-- SPIS PROJEKTÓW -->
-  <section class="content" id="projekty">
-    <h2 class="section-title">CONTENT</h2>
+  <!-- PROJEKTY: karuzela 3D -->
+<!-- ===== SEKCJA PROJEKTY (karuzela 3D) – wklej w miejsce starej karuzeli CONTENT ===== -->
+<section class="rs-section" id="projekty">
+  <h2 class="section-title reveal">PROJEKTY</h2>
 
-    <div class="panel">
-      <span class="crop tl"></span><span class="crop tr"></span>
-      <span class="crop bl"></span><span class="crop br"></span>
-
-       <div class="carousel">
-        <div class="carousel-head">
-          <span class="car-count" id="carCount">01 / 09</span>
-          <button class="car-btn" id="carPrev" type="button" aria-label="Poprzedni projekt"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2L4 7l5 5"/></svg></button>
-          <button class="car-btn" id="carNext" type="button" aria-label="Następny projekt"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 2l5 5-5 5"/></svg></button>
+  <div class="rs-stage" id="rs-stage">
+    <div class="rs-scene">
+      <div class="rs-world" id="rs-world">
+        <div class="rs-floor">
+          <div class="rs-tex"></div>
+          <svg class="rs-floor-labels" viewBox="-1053 -1053 2106 2106" aria-hidden="true">
+            <defs>
+              <path id="rs-pathInt" d="M -548 0 A 548 548 0 0 0 548 0"/>
+              <path id="rs-pathExt" d="M -868 0 A 868 868 0 0 0 868 0"/>
+            </defs>
+            <text><textPath href="#rs-pathInt" startOffset="29%" text-anchor="middle">INTERIOR</textPath></text>
+            <text><textPath href="#rs-pathExt" startOffset="73%" text-anchor="middle">EXTERIOR</textPath></text>
+          </svg>
         </div>
-        <div class="carousel-viewport" id="carViewport">
-          <div class="cards" id="carTrack">
-          <article class="card">
-            <p class="card-num">01</p>
-            <div class="card-thumb"><img src="media/projekt01.jpg" alt="Nazwa projektu"></div>
-            <h3>Nazwa projektu</h3>
-            <p class="card-sub">Krótki opis projektu</p>
-            <p class="card-meta">· Typ projektu / 2 miesiące</p>
-          </article>
-          <article class="card">
-            <p class="card-num">02</p>
-           <div class="card-thumb"><img src="media/projekt02.jpg" alt="Nazwa projektu"></div>
-            <h3>Nazwa projektu</h3>
-            <p class="card-sub">Krótki opis projektu</p>
-            <p class="card-meta">· Typ projektu / 1 miesiąc</p>
-          </article>
-          <article class="card">
-            <p class="card-num">03</p>
-            <div class="card-thumb"><img src="media/projekt03.jpg" alt="Nazwa projektu"></div>
-            <h3>Nazwa projektu</h3>
-            <p class="card-sub">Krótki opis projektu</p>
-            <p class="card-meta">· Typ projektu / 3 tygodnie</p>
-          </article>
-          <article class="card">
-            <p class="card-num">04</p>
-            <div class="card-thumb"><img src="media/projekt04.jpg" alt="Nazwa projektu"></div>
-            <h3>Nazwa projektu</h3>
-            <p class="card-sub">Krótki opis projektu</p>
-            <p class="card-meta">· Projekt własny / 2 miesiące</p>
-          </article>
-          <article class="card">
-            <p class="card-num">05</p>
-           <div class="card-thumb"><img src="media/projekt05.jpg" alt="Nazwa projektu"></div>
-            <h3>Nazwa projektu</h3>
-            <p class="card-sub">Krótki opis projektu</p>
-            <p class="card-meta">· Typ projektu / 1 miesiąc</p>
-          </article>
-          <article class="card">
-            <p class="card-num">06</p>
-            <div class="card-thumb"><img src="media/projekt06.jpg" alt="Nazwa projektu"></div>
-            <h3>Nazwa projektu</h3>
-            <p class="card-sub">Krótki opis projektu</p>
-            <p class="card-meta">· Typ projektu / 3 tygodnie</p>
-          </article>
-          <article class="card">
-            <p class="card-num">07</p>
-            <div class="card-thumb"><img src="media/projekt07.jpg" alt="Nazwa projektu"></div>
-            <h3>Nazwa projektu</h3>
-            <p class="card-sub">Krótki opis projektu</p>
-            <p class="card-meta">· Projekt własny / 6 tygodni</p>
-          </article>
-          <article class="card">
-            <p class="card-num">08</p>
-            <div class="card-thumb"><img src="media/projekt08.jpg" alt="Nazwa projektu"></div>
-            <h3>Nazwa projektu</h3>
-            <p class="card-sub">Krótki opis projektu</p>
-            <p class="card-meta">· Typ projektu / 2 miesiące</p>
-          </article>
-          <article class="card">
-            <p class="card-num">09</p>
-            <div class="card-thumb"><img src="media/projekt09.jpg" alt="Nazwa projektu"></div>
-            <h3>Pozostałe prace</h3>
-            <p class="card-sub">Wizualizacje / animacje</p>
-            <p class="card-meta">· Różne projekty</p>
-          </article>
-          </div>
-        </div>
+        <div class="rs-ring" id="rs-ring-exterior"></div>
+        <div class="rs-ring" id="rs-ring-interior"></div>
       </div>
-  </section>
+    </div>
+  </div>
+
+  <p class="rs-caption" id="rs-caption"></p>
+  <a class="rs-all" href="#">ZOBACZ WSZYSTKIE PRACE →</a>
+
+  <div class="rs-lightbox" id="rs-lightbox" hidden>
+    <button class="rs-lb-close" id="rs-lbClose" type="button">ZAMKNIJ ✕</button>
+    <button class="rs-lb-arrow rs-lb-prev" id="rs-lbPrev" type="button" aria-label="Poprzednie">‹</button>
+    <img class="rs-lb-img" id="rs-lbImg" alt="">
+    <button class="rs-lb-arrow rs-lb-next" id="rs-lbNext" type="button" aria-label="Następne">›</button>
+    <p class="rs-lb-cap" id="rs-lbCap"></p>
+  </div>
+</section>
+<!-- ===== KONIEC SEKCJI PROJEKTY ===== -->
 
   <!-- O MNIE -->
 <section class="about" id="o-mnie">
@@ -159,8 +115,13 @@
     </figure>
 
     <p class="about-text reveal">
-      Architekt i CGI Artist z ponad 6-letnim doświadczeniem w tworzeniu wizualizacji i animacji 3D dla międzynarodowych projektów architektonicznych, urbanistycznych i produktowych. Pełna, samodzielna odpowiedzialność za realizację shotów – od koncepcji, przez modelowanie, teksturowanie i oświetlenie, po finalny render. Doświadczenie w pracy przy wysokobudżetowych, prestiżowych projektach dla bliskowschodnich konsorcjów deweloperskich oraz przy powtarzalnej, wolumenowej produkcji wizualizacji produktowych dla marek meblowych i wnętrzarskich z Wielkiej Brytanii i Skandynawii. Aktywnie rozwija warsztat o narzędzia AI (ComfyUI, Figma Weave), łącząc tradycyjny CGI z nowymi technologiami.
+      Jestem architektem i grafikiem z ponad 6-letnim doświadczeniem w tworzeniu wizualizacji i animacji 3D. W trakcie swojej przygody z grafiką miałem okazję pracować między innymi przy dużych projektach animacyjnych dla bliskowschodnich konsorcjów oraz przy wizualizacjach aranżacyjnych i produktowych dla marek wnętrzarskich z Polski, Wielkiej Brytanii czy Skandynawii. W swojej pracy odpowiadałem za cały proces powstawania projektu, od koncepcji po finalny render. Modelowanie, oświetlenie czy postprodukcja nie mają dla mnie tajemnic. Ostatnio aktywnie rozwijam warsztat o nowe narzędzia AI, łącząc je z klasycznym CGI i starając się nie stracić ludzkiego wymiaru w tworzonych pracach.
     </p>
+
+    <div class="about-text about-text-2 reveal">
+      <h3 class="about-sub">O mnie, ale luźniej…</h3>
+      <p>Pochodzę znad morza, ale od 10 lat mieszkam w Poznaniu. Lubię sport – trenuję boks, grywam w tenisa, oglądam piłkę. Uwielbiam design w każdej postaci: tej do oglądania, czytania lub po prostu doświadczania. Sztuka inspiruje mnie i zachwyca w każdej skali, od miast zaprojektowanych z myślą o ludziach, przez piękną architekturę, po przedmioty codziennego użytku.</p>
+    </div>
   </div>
 </section>
 
@@ -171,20 +132,19 @@
     <p class="footer-small reveal">tel. +512 231 988</p>
     <p class="footer-small reveal">Poznań, Polska</p>
 <ul class="about-social footer-social reveal">
-    <li><a href="https://www.behance.net/TWOJ_PROFIL" target="_blank" rel="noopener" aria-label="Behance">
+    <li><a href="https://www.behance.net/bartekbruzda" target="_blank" rel="noopener" aria-label="Behance">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h4.8a2.4 2.4 0 0 1 0 4.8H3M3 11.8h5.3a2.6 2.6 0 0 1 0 5.2H3M3 7v10M14 7.5h6M14 13.5h6.2a3.1 3.1 0 1 0-.9 2.5"/></svg>
     </a></li>
-    <li><a href="https://www.linkedin.com/in/TWOJ_PROFIL" target="_blank" rel="noopener" aria-label="LinkedIn">
+    <li><a href="https://www.linkedin.com/in/bartek-bruzda-5a3670182/" target="_blank" rel="noopener" aria-label="LinkedIn">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10.5V16M11.5 16v-5.5M11.5 13c0-1.5 1-2.5 2.4-2.5s2.1 1 2.1 2.6V16"/><circle cx="8" cy="7.8" r=".7" fill="currentColor"/></svg>
     </a></li>
-    <li><a href="https://www.instagram.com/TWOJ_PROFIL" target="_blank" rel="noopener" aria-label="Instagram">
+    <li><a href="https://www.instagram.com/bart.render" target="_blank" rel="noopener" aria-label="Instagram">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r=".7" fill="currentColor"/></svg>
     </a></li>
   </ul>
-</div>
 </footer>
-  </footer>
 
   <script src="script.js"></script>
+  <script src="projekty/projekty.js"></script>
 </body>
 </html>
